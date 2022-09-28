@@ -32,7 +32,8 @@ namespace DefaultNamespace
 			JumpAction.Enable();
 			JumpAction.performed += OnJumpPerformed;
 
-			speed = PlayerPrefs.GetFloat("speed", 1f);
+			PlayerPrefs.DeleteAll();
+			speed = PlayerPrefs.GetFloat("speed", 10f);
 		}
 		
 		private void FixedUpdate()
@@ -45,9 +46,8 @@ namespace DefaultNamespace
 			Vector3 movementVector = movement * (speed * Time.fixedDeltaTime);
 
 			controller.Move(transform.forward * movementVector.z + 
+			                transform.right * movementVector.x +
 			                transform.up * movementVector.y);
-
-			transform.localRotation = Quaternion.Euler(transform.localRotation.x, transform.localRotation.y + 2, transform.localRotation.z);
 		}
 
 		private void OnMovePerformed(InputAction.CallbackContext _context)
